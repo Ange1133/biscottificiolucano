@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Biscottificio Lucano · Pasticceria a Grassano dal 1991</title>
+<meta name="description" content="Pasticceria a Grassano (MT) dal 1991. Pasticceria fresca, torte, semifreddi, taralli, biscotti, frise e rosticceria per le occasioni.">
+<style>
+  /* Caratteri ospitati nel sito (nessuna richiesta a Google) */
+  @font-face { font-family: "Cormorant Garamond"; font-style: normal; font-weight: 500 600; font-display: swap; src: url(font/cormorant-garamond.woff2) format("woff2"); }
+  @font-face { font-family: "Cormorant Garamond"; font-style: italic; font-weight: 500; font-display: swap; src: url(font/cormorant-garamond-italic.woff2) format("woff2"); }
+  @font-face { font-family: "Great Vibes"; font-style: normal; font-weight: 400; font-display: swap; src: url(font/great-vibes.woff2) format("woff2"); }
+  @font-face { font-family: "Nunito Sans"; font-style: normal; font-weight: 400 600; font-display: swap; src: url(font/nunito-sans.woff2) format("woff2"); }
+
+  :root {
+    --crema: #fbf7f0;
+    --crema-scura: #f3ece0;
+    --salvia: #a9b89a;
+    --salvia-chiara: #e6ebdf;
+    --bordeaux: #8c3b3b;
+    --grano: #c9a86a;
+    --testo: #4a3f38;
+    --testo-tenue: #7d7068;
+    --bianco: #fffdf9;
+    --bordo: #e7ddcd;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--crema);
+    color: var(--testo);
+    font-family: "Nunito Sans", system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  .contenitore { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  h1, h2, h3 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; color: var(--testo); line-height: 1.2; }
+  h2 { font-size: clamp(2rem, 4vw, 2.6rem); margin-bottom: .4em; }
+  h3 { font-size: 1.5rem; }
+  .occhiello {
+    font-size: .78rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--bordeaux); font-weight: 600; margin-bottom: .6em; display: block;
+  }
+  .intro { color: var(--testo-tenue); max-width: 620px; }
+  section { padding: 96px 0; }
+
+  /* Navigazione */
+  header.barra {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(251, 247, 240, .92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--bordo);
+  }
+  .barra .contenitore { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .marchio { font-family: "Great Vibes", cursive; font-size: 1.9rem; color: var(--bordeaux); text-decoration: none; line-height: 1; }
+  nav ul { list-style: none; display: flex; gap: 28px; }
+  nav a { text-decoration: none; font-size: .92rem; color: var(--testo-tenue); transition: color .2s; }
+  nav a:hover { color: var(--bordeaux); }
+  .menu-btn { display: none; background: none; border: 0; cursor: pointer; padding: 8px; color: var(--testo); }
+
+  /* Apertura */
+  .apertura {
+    text-align: center;
+    padding: 110px 0 120px;
+    background:
+      radial-gradient(ellipse at 50% 0%, var(--salvia-chiara) 0%, transparent 60%),
+      var(--crema);
+  }
+  .logo { width: min(560px, 100%); margin: 0 auto 6px; }
+  .nascosto { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .apertura h1 {
+    font-family: "Great Vibes", cursive; font-weight: 400;
+    font-size: clamp(3.2rem, 9vw, 5.8rem); color: var(--bordeaux); margin-bottom: 6px;
+  }
+  .apertura .dal {
+    font-family: "Cormorant Garamond", serif; font-style: italic;
+    font-size: clamp(1.25rem, 2.6vw, 1.6rem); color: var(--testo-tenue);
+  }
+  .apertura .categorie {
+    margin: 34px auto 40px; display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 10px 22px; font-size: .9rem; letter-spacing: .08em; text-transform: uppercase; color: var(--testo-tenue);
+  }
+  .apertura .categorie span::before { content: "·"; margin-right: 22px; color: var(--grano); }
+  .apertura .categorie span:first-child::before { content: none; }
+  .pulsanti { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 13px 28px; border-radius: 999px; text-decoration: none;
+    font-weight: 600; font-size: .95rem; transition: background .2s, color .2s, border-color .2s;
+  }
+  .btn-pieno { background: var(--bordeaux); color: var(--bianco); border: 1px solid var(--bordeaux); }
+  .btn-pieno:hover { background: #763030; }
+  .btn-vuoto { border: 1px solid var(--bordo); color: var(--testo); background: var(--bianco); }
+  .btn-vuoto:hover { border-color: var(--salvia); }
+
+  /* Prodotti */
+  .categoria {
+    display: grid; grid-template-columns: 290px 1fr; gap: 44px; align-items: start;
+    padding: 44px 0; border-top: 1px solid var(--bordo);
+  }
+  .categoria:first-of-type { margin-top: 40px; }
+  .categoria h3 { font-size: 1.8rem; margin-bottom: 10px; }
+  .categoria p { color: var(--testo-tenue); font-size: .97rem; }
+  .categoria ul { list-style: none; margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .categoria li {
+    font-size: .82rem; padding: 4px 12px; border-radius: 999px;
+    background: var(--bianco); border: 1px solid var(--bordo); color: var(--testo);
+  }
+  .categoria-foto { display: grid; grid-template-columns: repeat(var(--col, 3), 1fr); gap: 12px; }
+  .categoria-foto figure {
+    position: relative; aspect-ratio: var(--ar, 1); border-radius: 14px; overflow: hidden;
+    background: var(--crema-scura);
+  }
+  .categoria-foto figure.largo { grid-column: span 2; aspect-ratio: auto; }
+  .categoria-foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .categoria-foto figcaption {
+    position: absolute; left: 10px; bottom: 10px; padding: 3px 12px; border-radius: 999px;
+    background: rgba(255, 253, 249, .92); font-size: .82rem; font-weight: 600; color: var(--testo);
+  }
+
+  /* Occasioni */
+  .occasioni { background: var(--bianco); border-top: 1px solid var(--bordo); border-bottom: 1px solid var(--bordo); }
+  .occasioni .contenitore { display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: center; }
+  .elenco-occasioni { list-style: none; margin: 26px 0 32px; display: grid; gap: 14px; }
+  .elenco-occasioni li { display: flex; gap: 14px; align-items: baseline; }
+  .elenco-occasioni li::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--grano); flex: none; transform: translateY(-2px); }
+  .riquadro-foto {
+    aspect-ratio: 4 / 5; border-radius: 200px 200px 18px 18px; background: var(--salvia-chiara);
+    display: grid; place-items: center; color: var(--salvia);
+    border: 1px solid var(--bordo); overflow: hidden;
+  }
+  .riquadro-foto img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* Galleria */
+  .galleria-griglia { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 44px; }
+  .galleria-griglia figure { aspect-ratio: 1; border-radius: 14px; overflow: hidden; background: var(--crema-scura); }
+  .galleria-griglia figure.largo { grid-column: span 2; aspect-ratio: auto; }
+  .galleria-griglia img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+  .galleria-griglia figure:hover img { transform: scale(1.04); }
+
+  /* Storia */
+  .storia { text-align: center; }
+  .storia .anno {
+    font-family: "Cormorant Garamond", serif; font-size: clamp(4.5rem, 12vw, 7rem); line-height: 1;
+    color: var(--salvia); font-weight: 500;
+  }
+  .storia p { max-width: 640px; margin: 20px auto 0; color: var(--testo-tenue); font-size: 1.05rem; }
+  .storia .firma { font-family: "Great Vibes", cursive; color: var(--bordeaux); font-size: 2rem; margin-top: 24px; }
+
+  /* Orari e dove */
+  .visita { background: var(--crema-scura); }
+  .visita .contenitore { display: grid; grid-template-columns: 1fr 1.15fr; gap: 48px; align-items: start; }
+  .stato {
+    display: inline-flex; align-items: center; gap: 8px; font-size: .88rem; font-weight: 600;
+    padding: 6px 14px; border-radius: 999px; background: var(--bianco); border: 1px solid var(--bordo); margin: 6px 0 22px;
+  }
+  .stato i { width: 8px; height: 8px; border-radius: 50%; background: var(--testo-tenue); }
+  .stato.aperto i { background: #6f9a5d; }
+  .stato.chiuso i { background: var(--bordeaux); }
+  table.orari { width: 100%; border-collapse: collapse; font-size: .97rem; }
+  .orari td { padding: 11px 0; border-bottom: 1px solid var(--bordo); vertical-align: top; }
+  .orari td:last-child { text-align: right; color: var(--testo-tenue); }
+  .orari tr.oggi td { color: var(--bordeaux); font-weight: 600; }
+  .contatti { margin-top: 30px; display: grid; gap: 10px; }
+  .contatti a { text-decoration: none; display: flex; gap: 12px; align-items: center; }
+  .contatti a:hover { color: var(--bordeaux); }
+  .contatti svg { width: 18px; height: 18px; color: var(--bordeaux); flex: none; }
+  .mappa {
+    border-radius: 18px; overflow: hidden; border: 1px solid var(--bordo); background: var(--bianco);
+    min-height: 420px; height: 100%; display: flex; flex-direction: column;
+  }
+  .mappa svg { width: 100%; flex: 1; min-height: 240px; display: block; background: var(--salvia-chiara); }
+  .mappa .indirizzo { padding: 22px 24px 26px; text-align: center; }
+  .mappa .indirizzo strong { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.4rem; font-weight: 600; display: block; }
+  .mappa .indirizzo span { color: var(--testo-tenue); font-size: .95rem; }
+  .mappa .pulsanti { margin-top: 18px; }
+
+  footer { padding: 46px 0; text-align: center; font-size: .88rem; color: var(--testo-tenue); }
+  footer .marchio { font-size: 1.7rem; display: block; margin-bottom: 6px; }
+  footer .legale { margin-top: 10px; font-size: .8rem; }
+  footer .legale a { color: var(--testo-tenue); }
+
+  .avviso {
+    position: fixed; left: 50%; bottom: 24px; z-index: 20; transform: translate(-50%, 20px);
+    width: max-content; max-width: calc(100% - 32px); padding: 14px 20px; border-radius: 14px;
+    background: var(--testo); color: var(--bianco); font-size: .92rem; line-height: 1.5; text-align: center;
+    box-shadow: 0 8px 30px rgba(74, 63, 56, .25); opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s;
+  }
+  .avviso.visibile { opacity: 1; transform: translate(-50%, 0); }
+  .avviso strong { color: #f3d9a6; }
+
+  @media (max-width: 860px) {
+    section { padding: 72px 0; }
+    .categoria { grid-template-columns: 1fr; gap: 22px; padding: 36px 0; }
+    .categoria-foto {
+      grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 68%;
+      overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px;
+    }
+    .categoria-foto figure { scroll-snap-align: start; }
+    .categoria-foto figure.largo { grid-column: auto; aspect-ratio: var(--ar, 1); }
+    .occasioni .contenitore, .visita .contenitore { grid-template-columns: 1fr; gap: 40px; }
+    .riquadro-foto { max-width: 340px; margin: 0 auto; width: 100%; }
+    .galleria-griglia { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .galleria-griglia figure.largo { aspect-ratio: 2 / 1; }
+    .menu-btn { display: block; }
+    nav ul {
+      display: none; position: absolute; top: 68px; left: 0; right: 0; flex-direction: column; gap: 0;
+      background: var(--crema); border-bottom: 1px solid var(--bordo); padding: 8px 24px 16px;
+    }
+    nav ul.aperto { display: flex; }
+    nav li a { display: block; padding: 10px 0; font-size: 1rem; }
+  }
+  @media (max-width: 480px) {
+    .contenitore { padding: 0 16px; }
+    .apertura { padding: 80px 0 90px; }
+    .apertura .categorie span::before { content: none; }
+    .apertura .categorie { gap: 8px 18px; font-size: .82rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="barra">
+  <div class="contenitore">
+    <a href="#" class="marchio">Biscottificio Lucano</a>
+    <nav>
+      <button class="menu-btn" aria-label="Apri il menu" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <ul>
+        <li><a href="#prodotti">Prodotti</a></li>
+        <li><a href="#occasioni">Occasioni</a></li>
+        <li><a href="#galleria">Galleria</a></li>
+        <li><a href="#storia">Chi siamo</a></li>
+        <li><a href="#visita">Orari e contatti</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="apertura">
+    <div class="contenitore">
+      <img class="logo" src="foto/logo.png" alt="Biscottificio Lucano – Pasticceria dal 1991">
+      <h1 class="nascosto">Biscottificio Lucano</h1>
+      <p class="dal">Grassano (MT)</p>
+      <div class="categorie">
+        <span>Pasticceria fresca</span><span>Torte</span><span>Semifreddi</span><span>Biscotti</span><span>Panettoni e colombe</span><span>Rosticceria</span>
+      </div>
+      <div class="pulsanti">
+        <a class="btn btn-pieno" href="#prodotti">Scopri i nostri dolci</a>
+        <a class="btn btn-vuoto" href="#visita">Orari e dove siamo</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="prodotti">
+    <div class="contenitore">
+      <span class="occhiello">I nostri prodotti</span>
+      <h2>Fatti da noi, ogni giorno</h2>
+      <p class="intro">Dal bancone fresco del mattino ai biscotti da inzuppo, tutto nasce nel nostro laboratorio, con le ricette di casa e gli ingredienti del territorio.</p>
+
+      <article class="categoria">
+        <div>
+          <h3>Pasticceria fresca</h3>
+          <p>Pasticcini, zeppole, torte e semifreddi: il bancone di ogni giorno e i dolci per le vostre feste.</p>
+          <ul><li>Pasticcini</li><li>Torte</li><li>Semifreddi</li></ul>
+        </div>
+        <div class="categoria-foto">
+          <figure class="largo"><img src="foto/assortimento.jpg" alt="Assortimento di pasticcini, bignè e cannoli" loading="lazy"></figure>
+          <figure><img src="foto/zeppole.jpg" alt="Zeppole con crema e amarene" loading="lazy"></figure>
+          <figure><img src="foto/torta-compleanno.jpg" alt="Torta di compleanno decorata con fiori" loading="lazy"></figure>
+          <figure><img src="foto/semifreddi.jpg" alt="Torte e semifreddi in vetrina" loading="lazy"></figure>
+          <figure><img src="foto/zuccotti.jpg" alt="Zuccotti al cioccolato con perline" loading="lazy"></figure>
+        </div>
+      </article>
+
+      <article class="categoria">
+        <div>
+          <h3>Pasticceria secca</h3>
+          <p>I sapori della tradizione lucana: biscotti alle mandorle, al vino cotto di fichi e ripieni, taralli e frise, buoni da gustare a casa o da regalare.</p>
+          <ul><li>Biscotti tipici</li><li>Taralli</li><li>Frise</li></ul>
+        </div>
+        <div class="categoria-foto" style="--col:4">
+          <figure><img src="foto/vassoi.jpg" alt="Vassoi di biscotti appena sfornati" loading="lazy"></figure>
+          <figure><img src="foto/biscotti-mandorle.jpg" alt="Biscotti alle mandorle e biscotti al cotto di fichi" loading="lazy"></figure>
+          <figure><img src="foto/biscotti-fichi.jpg" alt="Biscotti tipici e biscotti ripieni" loading="lazy"></figure>
+          <figure><img src="foto/biscotti-natale.jpg" alt="Biscotti di Natale decorati" loading="lazy"></figure>
+        </div>
+      </article>
+
+      <article class="categoria">
+        <div>
+          <h3>Panettoni e colombe</h3>
+          <p>A Natale e a Pasqua prepariamo panettoni e colombe artigianali, con glasse e decorazioni diverse, anche in confezione regalo.</p>
+          <ul><li>Panettoni</li><li>Colombe</li><li>Confezioni regalo</li></ul>
+        </div>
+        <div class="categoria-foto">
+          <figure class="largo"><img src="foto/colombe.jpg" alt="Colombe pasquali in confezione regalo" loading="lazy"></figure>
+          <figure><img src="foto/colomba-cioccolato.jpg" alt="Colomba glassata al cioccolato" loading="lazy"></figure>
+          <figure><img src="foto/panettone-regalo.jpg" alt="Panettone in confezione regalo" loading="lazy"></figure>
+          <figure><img src="foto/colomba-lamponi.jpg" alt="Colomba con glassa bianca e lamponi" loading="lazy"></figure>
+          <figure><img src="foto/colomba-mandorle.jpg" alt="Colomba con mandorle e zucchero a velo" loading="lazy"></figure>
+        </div>
+      </article>
+
+      <article class="categoria">
+        <div>
+          <h3>Cerimonie</h3>
+          <p>Torte e dolci personalizzati per lauree, comunioni, confessioni e matrimoni, preparati su ordinazione con i colori e la scritta che preferite.</p>
+          <ul><li>Lauree</li><li>Comunioni</li><li>Confessioni</li><li>Matrimoni</li></ul>
+        </div>
+        <div class="categoria-foto" style="--col:4">
+          <figure><img src="foto/torta-laurea.jpg" alt="Torta di laurea con rose rosse" loading="lazy"><figcaption>Laurea</figcaption></figure>
+          <figure><img src="foto/torta-comunione.jpg" alt="Torta per la prima comunione" loading="lazy"><figcaption>Comunione</figcaption></figure>
+          <figure><img src="foto/torta-confessione.jpg" alt="Torta per la prima confessione" loading="lazy"><figcaption>Confessione</figcaption></figure>
+          <figure><img src="foto/sposi.jpg" alt="Biscotto a cuore e dolcetti per gli sposi" loading="lazy"><figcaption>Matrimonio</figcaption></figure>
+        </div>
+      </article>
+
+      <article class="categoria">
+        <div>
+          <h3>Rosticceria</h3>
+          <p>Per feste e ricorrenze prepariamo vassoi di rosticceria su ordinazione: pizzette, panzerotti, rustici, cornetti salati e panini farciti.</p>
+          <ul><li>Rustici</li><li>Pizzette</li><li>Su ordinazione</li></ul>
+        </div>
+        <div class="categoria-foto" style="--col:2; --ar:4/3">
+          <figure><img src="foto/rosticceria.jpg" alt="Vassoi di rosticceria assortita" loading="lazy"></figure>
+          <figure><img src="foto/rosticceria-2.jpg" alt="Panzerotti, cornetti salati e paninetti" loading="lazy"></figure>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="occasioni" class="occasioni">
+    <div class="contenitore">
+      <div>
+        <span class="occhiello">Su ordinazione</span>
+        <h2>Per i vostri momenti importanti</h2>
+        <p class="intro">Una torta per il compleanno, un vassoio di pasticcini per la comunione, la rosticceria per una festa: raccontateci l'occasione e la prepariamo insieme.</p>
+        <ul class="elenco-occasioni">
+          <li>Compleanni e anniversari</li>
+          <li>Comunioni, confessioni e cresime</li>
+          <li>Lauree e matrimoni</li>
+          <li>Vassoi di pasticceria e rosticceria</li>
+        </ul>
+        <div class="pulsanti" style="justify-content:flex-start">
+          <a class="btn btn-pieno" href="tel:+390835527164">Chiama lo 0835 527164</a>
+          <a class="btn btn-vuoto" href="mailto:biscottificiolucano@virgilio.it">Scrivici una mail</a>
+        </div>
+      </div>
+      <div class="riquadro-foto">
+        <img src="foto/pasticcini-fiori.jpg" alt="Pasticcini bianchi decorati con fiori rosa" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section id="galleria">
+    <div class="contenitore">
+      <span class="occhiello">Galleria</span>
+      <h2>Dal nostro laboratorio</h2>
+      <p class="intro">Qualche creazione recente, dal bancone di tutti i giorni alle feste più importanti.</p>
+      <div class="galleria-griglia">
+        <figure class="largo"><img src="foto/tavolo.jpg" alt="Tavolo dei dolci allestito per una festa" loading="lazy"></figure>
+        <figure><img src="foto/cornetti.jpg" alt="Cornetti appena sfornati" loading="lazy"></figure>
+        <figure><img src="foto/cannoli.jpg" alt="Cannoli con ricotta e canditi" loading="lazy"></figure>
+        <figure><img src="foto/fiori-lilla.jpg" alt="Dolcetti decorati con fiori lilla" loading="lazy"></figure>
+        <figure><img src="foto/vetrina.jpg" alt="Vetrina con pasticceria mignon" loading="lazy"></figure>
+        <figure><img src="foto/praline.jpg" alt="Scatole regalo di praline" loading="lazy"></figure>
+        <figure><img src="foto/biscotti-rosa.jpg" alt="Biscotti decorati rosa" loading="lazy"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="storia" class="storia">
+    <div class="contenitore">
+      <span class="occhiello">Chi siamo</span>
+      <div class="anno">1991</div>
+      <h2>Tradizione e passione</h2>
+      <p>Dal 1991 il Biscottificio Lucano porta in tavola i dolci della tradizione, nel cuore di Grassano. Ogni giorno impastiamo, inforniamo e decoriamo nel nostro laboratorio, con pazienza e ingredienti genuini.</p>
+    </div>
+  </section>
+
+  <section id="visita" class="visita">
+    <div class="contenitore">
+      <div>
+        <span class="occhiello">Vieni a trovarci</span>
+        <h2>Orari e contatti</h2>
+        <div class="stato" id="stato" hidden><i></i><span></span></div>
+        <table class="orari">
+          <tbody>
+            <tr data-giorno="1"><td>Lunedì</td><td>Chiuso</td></tr>
+            <tr data-giorno="2"><td>Martedì</td><td>7:30 – 12:30 · 16:30 – 20:00</td></tr>
+            <tr data-giorno="3"><td>Mercoledì</td><td>7:30 – 12:30 · 16:30 – 20:00</td></tr>
+            <tr data-giorno="4"><td>Giovedì</td><td>7:30 – 12:30 · 16:30 – 20:00</td></tr>
+            <tr data-giorno="5"><td>Venerdì</td><td>7:30 – 12:30 · 16:30 – 20:00</td></tr>
+            <tr data-giorno="6"><td>Sabato</td><td>7:30 – 12:30 · 16:30 – 20:00</td></tr>
+            <tr data-giorno="0"><td>Domenica</td><td>7:30 – 13:30</td></tr>
+          </tbody>
+        </table>
+        <div class="contatti">
+          <a href="https://www.google.com/maps/search/?api=1&query=Via+Italia+21+75014+Grassano+MT" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+            Via Italia 21, 75014 Grassano (MT)
+          </a>
+          <a href="tel:+390835527164">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+            0835 527164
+          </a>
+          <a href="mailto:biscottificiolucano@virgilio.it">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            biscottificiolucano@virgilio.it
+          </a>
+        </div>
+      </div>
+      <div class="mappa">
+        <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <g fill="none" stroke="#fffdf9" stroke-linecap="round">
+            <path d="M-10 170 C80 150 140 120 210 128 S330 110 410 70" stroke-width="14"/>
+            <path d="M120 -10 C130 60 150 110 170 250" stroke-width="10"/>
+            <path d="M260 -10 C250 50 270 120 300 250" stroke-width="8"/>
+            <path d="M-10 70 C60 80 110 60 180 40" stroke-width="7"/>
+            <path d="M200 250 C230 200 300 180 410 190" stroke-width="7"/>
+          </g>
+          <circle cx="212" cy="128" r="34" fill="#8c3b3b" opacity=".12"/>
+          <path d="M212 132s-22-19-22-36a22 22 0 0 1 44 0c0 17-22 36-22 36z" fill="#8c3b3b"/>
+          <circle cx="212" cy="96" r="8" fill="#fffdf9"/>
+        </svg>
+        <div class="indirizzo">
+          <strong>Via Italia 21</strong>
+          <span>75014 Grassano (MT)</span>
+          <div class="pulsanti">
+            <a class="btn btn-pieno" href="https://www.google.com/maps/dir/?api=1&destination=Via+Italia+21+75014+Grassano+MT" target="_blank" rel="noopener">Indicazioni stradali</a>
+            <a class="btn btn-vuoto" href="https://www.google.com/maps/search/?api=1&query=Via+Italia+21+75014+Grassano+MT" target="_blank" rel="noopener">Apri in Google Maps</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="contenitore">
+    <span class="marchio">Biscottificio Lucano</span>
+    Pasticceria dal 1991 · Via Italia 21, Grassano (MT) · Tel. 0835 527164
+    <div class="legale">P.IVA 00540150778 · <a href="privacy.html">Privacy</a></div>
+  </div>
+</footer>
+
+<script>
+  // Menu su mobile
+  const btn = document.querySelector('.menu-btn');
+  const menu = document.querySelector('nav ul');
+  btn.addEventListener('click', () => {
+    const aperto = menu.classList.toggle('aperto');
+    btn.setAttribute('aria-expanded', aperto);
+  });
+  menu.addEventListener('click', e => { if (e.target.tagName === 'A') menu.classList.remove('aperto'); });
+
+  // Sul computer spesso non c'è un'app per telefonare o per la posta:
+  // copiamo numero/indirizzo e lo diciamo con un avviso
+  const avviso = document.createElement('div');
+  avviso.className = 'avviso';
+  avviso.setAttribute('role', 'status');
+  document.body.appendChild(avviso);
+  let timerAvviso;
+  const mostraAvviso = html => {
+    avviso.innerHTML = html;
+    avviso.classList.add('visibile');
+    clearTimeout(timerAvviso);
+    timerAvviso = setTimeout(() => avviso.classList.remove('visibile'), 5000);
+  };
+  const copia = testo => navigator.clipboard?.writeText(testo).catch(() => {});
+  const suComputer = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (suComputer) {
+    document.querySelectorAll('a[href^="tel:"]').forEach(a => a.addEventListener('click', e => {
+      e.preventDefault();
+      copia('0835 527164');
+      mostraAvviso('Chiamaci allo <strong>0835 527164</strong><br>Il numero è stato copiato.');
+    }));
+    document.querySelectorAll('a[href^="mailto:"]').forEach(a => a.addEventListener('click', () => {
+      copia('biscottificiolucano@virgilio.it');
+      mostraAvviso('Scrivici a <strong>biscottificiolucano@virgilio.it</strong><br>L\'indirizzo è stato copiato: se non si apre la posta, incollalo nella tua email.');
+    }));
+  }
+
+  // Evidenzia il giorno di oggi e mostra se il negozio è aperto (ora italiana)
+  const fasce = {
+    0: [[450, 810]],
+    1: [],
+    2: [[450, 750], [990, 1200]], 3: [[450, 750], [990, 1200]], 4: [[450, 750], [990, 1200]],
+    5: [[450, 750], [990, 1200]], 6: [[450, 750], [990, 1200]]
+  };
+  const ora = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Rome' }));
+  const giorno = ora.getDay();
+  const minuti = ora.getHours() * 60 + ora.getMinutes();
+  document.querySelector(`tr[data-giorno="${giorno}"]`)?.classList.add('oggi');
+  const aperto = fasce[giorno].some(([da, a]) => minuti >= da && minuti < a);
+  const stato = document.getElementById('stato');
+  stato.classList.add(aperto ? 'aperto' : 'chiuso');
+  stato.querySelector('span').textContent = aperto ? 'Aperto ora' : 'Ora chiuso';
+  stato.hidden = false;
+</script>
+</body>
+</html>
