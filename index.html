@@ -536,9 +536,21 @@
   const minuti = ora.getHours() * 60 + ora.getMinutes();
   document.querySelector(`tr[data-giorno="${giorno}"]`)?.classList.add('oggi');
   const aperto = fasce[giorno].some(([da, a]) => minuti >= da && minuti < a);
+  // Quando è chiuso, cerca la prossima apertura nei 7 giorni successivi
+  const nomiGiorni = ['domenica', 'lunedì', 'martedì', 'mercoledì', 'giovedì', 'venerdì', 'sabato'];
+  const orario = m => `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`;
+  const prossimaApertura = () => {
+    for (let d = 0; d < 8; d++) {
+      const g = (giorno + d) % 7;
+      const fascia = fasce[g].find(([da]) => d > 0 || da > minuti);
+      if (!fascia) continue;
+      const quando = d === 0 ? 'oggi' : d === 1 ? 'domani' : nomiGiorni[g];
+      return `riapre ${quando} alle ${orario(fascia[0])}`;
+    }
+  };
   const stato = document.getElementById('stato');
   stato.classList.add(aperto ? 'aperto' : 'chiuso');
-  stato.querySelector('span').textContent = aperto ? 'Aperto ora' : 'Ora chiuso';
+  stato.querySelector('span').textContent = aperto ? 'Aperto ora' : `Ora chiuso · ${prossimaApertura()}`;
   stato.hidden = false;
 </script>
 </body>
