@@ -436,6 +436,7 @@
             <tr data-giorno="5"><td>Venerdì</td><td>7:30 – 12:30 · 16:30 – 20:00</td></tr>
             <tr data-giorno="6"><td>Sabato</td><td>7:30 – 12:30 · 16:30 – 20:00</td></tr>
             <tr data-giorno="0"><td>Domenica</td><td>7:30 – 13:30</td></tr>
+            <tr data-giorno="festivi"><td>Festivi</td><td>7:30 – 13:30</td></tr>
           </tbody>
         </table>
         <div class="contatti">
@@ -531,18 +532,35 @@
     2: [[450, 750], [990, 1200]], 3: [[450, 750], [990, 1200]], 4: [[450, 750], [990, 1200]],
     5: [[450, 750], [990, 1200]], 6: [[450, 750], [990, 1200]]
   };
+  // Festivi nazionali: si apre con l'orario della domenica
+  const pasqua = anno => {
+    const a = anno % 19, b = Math.floor(anno / 100), c = anno % 100, d = Math.floor(b / 4), e = b % 4;
+    const f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30;
+    const i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451);
+    return new Date(anno, Math.floor((h + l - 7 * m + 114) / 31) - 1, ((h + l - 7 * m + 114) % 31) + 1);
+  };
+  const festiviFissi = ['1-1', '1-6', '4-25', '5-1', '6-2', '8-15', '11-1', '12-8', '12-25', '12-26'];
+  const festivo = data => {
+    if (festiviFissi.includes(`${data.getMonth() + 1}-${data.getDate()}`)) return true;
+    const pasquetta = pasqua(data.getFullYear());
+    pasquetta.setDate(pasquetta.getDate() + 1);
+    return data.toDateString() === pasquetta.toDateString();
+  };
+  const fasceDel = data => festivo(data) ? fasce[0] : fasce[data.getDay()];
+
   const ora = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Rome' }));
   const giorno = ora.getDay();
   const minuti = ora.getHours() * 60 + ora.getMinutes();
-  document.querySelector(`tr[data-giorno="${giorno}"]`)?.classList.add('oggi');
-  const aperto = fasce[giorno].some(([da, a]) => minuti >= da && minuti < a);
-  // Quando è chiuso, cerca la prossima apertura nei 7 giorni successivi
+  document.querySelector(`tr[data-giorno="${festivo(ora) ? 'festivi' : giorno}"]`)?.classList.add('oggi');
+  const aperto = fasceDel(ora).some(([da, a]) => minuti >= da && minuti < a);
+  // Quando è chiuso, cerca la prossima apertura nei giorni successivi
   const nomiGiorni = ['domenica', 'lunedì', 'martedì', 'mercoledì', 'giovedì', 'venerdì', 'sabato'];
   const orario = m => `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`;
   const prossimaApertura = () => {
     for (let d = 0; d < 8; d++) {
-      const g = (giorno + d) % 7;
-      const fascia = fasce[g].find(([da]) => d > 0 || da > minuti);
+      const data = new Date(ora.getFullYear(), ora.getMonth(), ora.getDate() + d);
+      const g = data.getDay();
+      const fascia = fasceDel(data).find(([da]) => d > 0 || da > minuti);
       if (!fascia) continue;
       const quando = d === 0 ? 'oggi' : d === 1 ? 'domani' : nomiGiorni[g];
       return `Riapre ${quando} alle ${orario(fascia[0])}`;
