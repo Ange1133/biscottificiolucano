@@ -120,13 +120,13 @@
     font-size: .82rem; padding: 4px 12px; border-radius: 999px;
     background: var(--bianco); border: 1px solid var(--bordo); color: var(--testo);
   }
-  .categoria-foto { display: grid; grid-template-columns: repeat(var(--col, 3), 1fr); gap: 12px; }
+  /* Mosaico: ogni foto intera, con le sue proporzioni */
+  .categoria-foto { column-count: var(--col, 3); column-gap: 12px; }
   .categoria-foto figure {
-    position: relative; aspect-ratio: var(--ar, 1); border-radius: 14px; overflow: hidden;
+    position: relative; break-inside: avoid; margin-bottom: 12px; border-radius: 14px; overflow: hidden;
     background: var(--crema-scura);
   }
-  .categoria-foto figure.largo { grid-column: span 2; aspect-ratio: auto; }
-  .categoria-foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .categoria-foto img { display: block; width: 100%; height: auto; }
   .categoria-foto figcaption {
     position: absolute; left: 10px; bottom: 10px; padding: 3px 12px; border-radius: 999px;
     background: rgba(255, 253, 249, .92); font-size: .82rem; font-weight: 600; color: var(--testo);
@@ -146,10 +146,9 @@
   .riquadro-foto img { width: 100%; height: 100%; object-fit: cover; }
 
   /* Galleria */
-  .galleria-griglia { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 44px; }
-  .galleria-griglia figure { aspect-ratio: 1; border-radius: 14px; overflow: hidden; background: var(--crema-scura); }
-  .galleria-griglia figure.grande { grid-column: span 2; grid-row: span 2; }
-  .galleria-griglia img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+  .galleria-griglia { column-count: 3; column-gap: 14px; margin-top: 44px; }
+  .galleria-griglia figure { break-inside: avoid; margin-bottom: 14px; border-radius: 14px; overflow: hidden; background: var(--crema-scura); }
+  .galleria-griglia img { display: block; width: 100%; height: auto; transition: transform .5s ease; }
   .galleria-griglia figure:hover img { transform: scale(1.04); }
 
   /* Storia */
@@ -206,15 +205,18 @@
   @media (max-width: 860px) {
     section { padding: 72px 0; }
     .categoria { grid-template-columns: 1fr; gap: 22px; padding: 36px 0; }
+    /* Su telefono: striscia da scorrere, foto tutte alte uguali e intere */
     .categoria-foto {
-      grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 68%;
+      column-count: auto; display: flex; gap: 10px;
       overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px;
     }
-    .categoria-foto figure { scroll-snap-align: start; }
-    .categoria-foto figure.largo { grid-column: auto; aspect-ratio: var(--ar, 1); }
+    .categoria-foto { align-items: center; }
+    .categoria-foto figure { flex: none; margin: 0; scroll-snap-align: start; }
+    .categoria-foto img { width: auto; height: auto; max-height: 260px; max-width: calc(100vw - 56px); }
     .occasioni .contenitore, .visita .contenitore { grid-template-columns: 1fr; gap: 40px; }
     .riquadro-foto { max-width: 340px; margin: 0 auto; width: 100%; }
-    .galleria-griglia { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .galleria-griglia { column-count: 2; column-gap: 10px; }
+    .galleria-griglia figure { margin-bottom: 10px; }
     .menu-btn { display: block; }
     nav ul {
       display: none; position: absolute; top: 68px; left: 0; right: 0; flex-direction: column; gap: 0;
@@ -280,12 +282,12 @@
           <ul><li>Pasticcini</li><li>Torte</li><li>Semifreddi</li></ul>
         </div>
         <div class="categoria-foto" style="--col:4">
-          <figure class="largo"><img src="foto/assortimento.jpg" alt="Assortimento di pasticcini, bignè e cannoli" loading="lazy"></figure>
+          <figure><img src="foto/assortimento.jpg" alt="Assortimento di pasticcini, bignè e cannoli" loading="lazy"></figure>
           <figure><img src="foto/torta-compleanno.jpg" alt="Torta di compleanno decorata con fiori" loading="lazy"></figure>
           <figure><img src="foto/semifreddi.jpg" alt="Torte e semifreddi in vetrina" loading="lazy"></figure>
           <figure><img src="foto/zuccotti.jpg" alt="Zuccotti al cioccolato con perline" loading="lazy"></figure>
           <figure><img src="foto/torta-35-anni.jpg" alt="Torta di compleanno con macaron e cioccolato" loading="lazy"></figure>
-          <figure class="largo"><img src="foto/torta-fragole.jpg" alt="Torta con panna e fragole fresche" loading="lazy"></figure>
+          <figure><img src="foto/torta-fragole.jpg" alt="Torta con panna e fragole fresche" loading="lazy"></figure>
           <figure><img src="foto/torta-90-anni.jpg" alt="Torta per un novantesimo compleanno" loading="lazy"></figure>
           <figure><img src="foto/torta-numero.jpg" alt="Torta a forma di numero con crema e macaron" loading="lazy"></figure>
           <figure><img src="foto/torta-happy-birthday.jpg" alt="Torta bianca con fiocchi neri e cuori" loading="lazy"></figure>
@@ -330,7 +332,7 @@
           <ul><li>Panettoni</li><li>Colombe</li><li>Confezioni regalo</li></ul>
         </div>
         <div class="categoria-foto">
-          <figure class="largo"><img src="foto/colombe.jpg" alt="Colombe pasquali in confezione regalo" loading="lazy"></figure>
+          <figure><img src="foto/colombe.jpg" alt="Colombe pasquali in confezione regalo" loading="lazy"></figure>
           <figure><img src="foto/colomba-cioccolato.jpg" alt="Colomba glassata al cioccolato" loading="lazy"></figure>
           <figure><img src="foto/panettone-regalo.jpg" alt="Panettone in confezione regalo" loading="lazy"></figure>
           <figure><img src="foto/colomba-lamponi.jpg" alt="Colomba con glassa bianca e lamponi" loading="lazy"></figure>
@@ -347,8 +349,8 @@
         <div class="categoria-foto" style="--col:4">
           <figure><img src="foto/torta-laurea.jpg" alt="Torta di laurea con rose rosse" loading="lazy"><figcaption>Laurea</figcaption></figure>
           <figure><img src="foto/torta-comunione.jpg" alt="Torta per la prima comunione" loading="lazy"><figcaption>Comunione</figcaption></figure>
-          <figure class="largo"><img src="foto/torta-battesimo.jpg" alt="Torta per il battesimo decorata in rosa" loading="lazy"><figcaption>Battesimo</figcaption></figure>
-          <figure class="largo"><img src="foto/torta-laurea-2.jpg" alt="Torta di laurea con tocco e pergamena" loading="lazy"><figcaption>Laurea</figcaption></figure>
+          <figure><img src="foto/torta-battesimo.jpg" alt="Torta per il battesimo decorata in rosa" loading="lazy"><figcaption>Battesimo</figcaption></figure>
+          <figure><img src="foto/torta-laurea-2.jpg" alt="Torta di laurea con tocco e pergamena" loading="lazy"><figcaption>Laurea</figcaption></figure>
           <figure><img src="foto/torta-cresima.jpg" alt="Torta per la santa cresima" loading="lazy"><figcaption>Cresima</figcaption></figure>
           <figure><img src="foto/torta-confessione.jpg" alt="Torta per la prima confessione" loading="lazy"><figcaption>Confessione</figcaption></figure>
           <figure><img src="foto/sposi.jpg" alt="Biscotto a cuore e dolcetti per gli sposi" loading="lazy"><figcaption>Matrimonio</figcaption></figure>
@@ -364,7 +366,7 @@
           <p>Per feste e ricorrenze prepariamo vassoi di rosticceria su ordinazione: pizzette, panzerotti, rustici, cornetti salati e panini farciti.</p>
           <ul><li>Su ordinazione</li></ul>
         </div>
-        <div class="categoria-foto" style="--col:2; --ar:4/3">
+        <div class="categoria-foto" style="--col:2">
           <figure><img src="foto/rosticceria.jpg" alt="Vassoi di rosticceria assortita" loading="lazy"></figure>
           <figure><img src="foto/rosticceria-2.jpg" alt="Panzerotti, cornetti salati e paninetti" loading="lazy"></figure>
         </div>
@@ -401,7 +403,7 @@
       <h2>Dal nostro laboratorio</h2>
       <p class="intro">Qualche creazione recente, dal bancone di tutti i giorni alle feste più importanti.</p>
       <div class="galleria-griglia">
-        <figure class="grande"><img src="foto/tavolo-matrimonio.jpg" alt="Tavolo dei dolci allestito per un matrimonio" loading="lazy"></figure>
+        <figure><img src="foto/tavolo-matrimonio.jpg" alt="Tavolo dei dolci allestito per un matrimonio" loading="lazy"></figure>
         <figure><img src="foto/cornetti.jpg" alt="Cornetti appena sfornati" loading="lazy"></figure>
         <figure><img src="foto/cannoli.jpg" alt="Cannoli con ricotta e canditi" loading="lazy"></figure>
         <figure><img src="foto/vetrina.jpg" alt="Vetrina con pasticceria mignon" loading="lazy"></figure>
