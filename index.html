@@ -539,7 +539,8 @@
     const i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451);
     return new Date(anno, Math.floor((h + l - 7 * m + 114) / 31) - 1, ((h + l - 7 * m + 114) % 31) + 1);
   };
-  const festiviFissi = ['1-1', '1-6', '4-25', '5-1', '6-2', '8-15', '11-1', '12-8', '12-25', '12-26'];
+  // Il 22 settembre è la festa del santo patrono di Grassano
+  const festiviFissi = ['1-1', '1-6', '4-25', '5-1', '6-2', '8-15', '9-22', '11-1', '12-8', '12-25', '12-26'];
   const festivo = data => {
     if (festiviFissi.includes(`${data.getMonth() + 1}-${data.getDate()}`)) return true;
     const pasquetta = pasqua(data.getFullYear());
