@@ -545,7 +545,7 @@
       const fascia = fasce[g].find(([da]) => d > 0 || da > minuti);
       if (!fascia) continue;
       const quando = d === 0 ? 'oggi' : d === 1 ? 'domani' : nomiGiorni[g];
-      return `riapre ${quando} alle ${orario(fascia[0])}`;
+      return `Riapre ${quando} alle ${orario(fascia[0])}`;
     }
   };
   const stato = document.getElementById('stato');
