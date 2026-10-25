@@ -148,7 +148,7 @@
   /* Galleria */
   .galleria-griglia { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 44px; }
   .galleria-griglia figure { aspect-ratio: 1; border-radius: 14px; overflow: hidden; background: var(--crema-scura); }
-  .galleria-griglia figure.largo { grid-column: span 2; aspect-ratio: auto; }
+  .galleria-griglia figure.grande { grid-column: span 2; grid-row: span 2; }
   .galleria-griglia img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
   .galleria-griglia figure:hover img { transform: scale(1.04); }
 
@@ -215,7 +215,6 @@
     .occasioni .contenitore, .visita .contenitore { grid-template-columns: 1fr; gap: 40px; }
     .riquadro-foto { max-width: 340px; margin: 0 auto; width: 100%; }
     .galleria-griglia { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .galleria-griglia figure.largo { aspect-ratio: 2 / 1; }
     .menu-btn { display: block; }
     nav ul {
       display: none; position: absolute; top: 68px; left: 0; right: 0; flex-direction: column; gap: 0;
@@ -396,13 +395,11 @@
       <h2>Dal nostro laboratorio</h2>
       <p class="intro">Qualche creazione recente, dal bancone di tutti i giorni alle feste più importanti.</p>
       <div class="galleria-griglia">
-        <figure class="largo"><img src="foto/tavolo.jpg" alt="Tavolo dei dolci allestito per una festa" loading="lazy"></figure>
+        <figure class="grande"><img src="foto/tavolo-matrimonio.jpg" alt="Tavolo dei dolci allestito per un matrimonio" loading="lazy"></figure>
         <figure><img src="foto/cornetti.jpg" alt="Cornetti appena sfornati" loading="lazy"></figure>
         <figure><img src="foto/cannoli.jpg" alt="Cannoli con ricotta e canditi" loading="lazy"></figure>
-        <figure><img src="foto/fiori-lilla.jpg" alt="Dolcetti decorati con fiori lilla" loading="lazy"></figure>
         <figure><img src="foto/vetrina.jpg" alt="Vetrina con pasticceria mignon" loading="lazy"></figure>
         <figure><img src="foto/praline.jpg" alt="Scatole regalo di praline" loading="lazy"></figure>
-        <figure><img src="foto/biscotti-rosa.jpg" alt="Biscotti decorati rosa" loading="lazy"></figure>
       </div>
     </div>
   </section>
